@@ -21,10 +21,12 @@ LiteScipt是一个开源的编程语言,它的构造简单,
 
 ## 3.我的第一个LiteScipt程序
 HelloWorld.lsp 文件:
+```
 import <string.lsp>
 fun main(){
   print("HelloWorld")
 }
+```
 
 要执行以上代码只需要输入
 litescipt -lsp HelloWorld.lsp即可运行
@@ -34,10 +36,12 @@ litescipt -lsp HelloWorld.lsp即可运行
 
 需要注意的是,在LiteScipt中{是不能单独在一行的,
 如下面的代码就是错误的
+```
 fun main()
 {
    
 }
+```
 
 ## 4.LiteScipt的保留字,标识符
 保留字:
@@ -52,9 +56,11 @@ print import
 LS语言中变量申明必须用空格分隔
 这样你的语言才让解释器更能读懂
 如:
+```
 int a = 10
 double b = 20.0
 int c = a+b*c
+```
 在LS语言中,代码必须分行分隔
 因为在LS中每行代码后面不需要用分号进行分隔
 
@@ -69,9 +75,11 @@ int double char bool
 申明变量一般是 数据类型 变量名 = 值
 当然你也可以直接申明不赋值,这样它的默认值就是0(NULL)
 如:
+```
 int a
 int b = 4+a
 print(b) 
+```
 这个时候程序会输出
 >>4
 
@@ -80,9 +88,12 @@ print(b)
 第一次是扫读所有代码,检查语法并将合法的变量初始化赋值
 第二次是从main函数开始读,并从栈中执行语句
 每个lsp文件中必备一个main函数,可以不用标注返回类型,如
+```
 fun main(){
 }
+```
 当然你也可以自定义函数,如
+```
 fun main(){
 int b = 10
 int a = testF(b)
@@ -90,3 +101,4 @@ int a = testF(b)
 fun testF(int v):int{
 return v
 }
+```
