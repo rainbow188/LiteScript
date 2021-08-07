@@ -1,0 +1,2 @@
+# LiteScipt
+The LiteScipt Interpreter
