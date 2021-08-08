@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="LiteScipt:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/LiteScipt_jar</output-path>
+    <root id="archive" name="LiteScipt.jar">
+      <element id="module-output" name="LiteScipt" />
+    </root>
+  </artifact>
+</component>
