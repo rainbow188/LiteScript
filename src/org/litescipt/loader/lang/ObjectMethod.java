@@ -12,7 +12,7 @@ public class ObjectMethod extends Object {
 
     private String funReturnType;//函数返回类型
     private String funInvokeArgs;//函数参数
-    private HashMap<String, Object> argsValue;
+    public HashMap<String, Object> argsValue;
 
     public ObjectMethod(Class aClass, String name, ArrayList<String> buffer, String funReturnType, String funInvokeArgs) {
         this.funName = name;
@@ -25,12 +25,12 @@ public class ObjectMethod extends Object {
 
     public void update(ArrayList<String> argsValue) {
         this.argsValue = new HashMap<>();
-        String[] args = funInvokeArgs.split("\\s+");
+        String[] args = funInvokeArgs.split(",");
         int i = 0;
         for (String str : argsValue) {
             String variableType = args[i].split("\\s+")[0];
             String variableName = args[i].split("\\s+")[1];
-            ObjectMath objectMath = new ObjectMath(aClass, str, aClass.workLine);
+            ObjectMath objectMath = new ObjectMath(aClass, str, aClass.workLine, this);
             if (objectMath.check(str)) {
                 switch (variableType) {
                     case "int":

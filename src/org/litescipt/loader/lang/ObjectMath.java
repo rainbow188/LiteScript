@@ -10,11 +10,13 @@ public class ObjectMath extends Object {
     public String code;
     public Class target;
     public int line;
+    public ObjectMethod objectMethod;
 
-    public ObjectMath(Class target, String code, int line) {
+    public ObjectMath(Class target, String code, int line, ObjectMethod objectMethod) {
         this.code = code;
         this.target = target;
         this.line = line;
+        this.objectMethod = objectMethod;
     }
 
     public int getIntValue() {
@@ -46,13 +48,21 @@ public class ObjectMath extends Object {
                             else if (target.variableMap.get(valueStr) instanceof Double)
                                 sum += ((Double) target.variableMap.get(valueStr)).getValue();
                         } else {
-                            LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + target.name
-                                    + "\nat " + target.name + "." + target.funWorker + "()[" + target.name + ".lsp:" + (line) + "]" +
-                                    "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
-                            return 0;
+                            if (objectMethod.argsValue.containsKey(valueStr)) {
+                                if (objectMethod.argsValue.get(valueStr) instanceof Integer) {
+                                    sum += ((Integer) objectMethod.argsValue.get(valueStr)).getValue();
+                                } else if (objectMethod.argsValue.get(valueStr) instanceof Double) {
+                                    sum += ((Double) objectMethod.argsValue.get(valueStr)).getValue();
+                                }
+                            } else {
+                                LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + target.name
+                                        + "\nat " + target.name + "." + target.funWorker + "()[" + target.name + ".lsp:" + (line) + "]" +
+                                        "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
+                                return 0;
+                            }
                         }
                     } else {
-                        ObjectMath objectMath = new ObjectMath(target, valueStr, line);
+                        ObjectMath objectMath = new ObjectMath(target, valueStr, line, objectMethod);
                         int value2 = objectMath.getIntValue();
                         sum += value2;
                     }
@@ -67,13 +77,21 @@ public class ObjectMath extends Object {
                             else if (target.variableMap.get(valueStr) instanceof Double)
                                 sum -= ((Double) target.variableMap.get(valueStr)).getValue();
                         } else {
-                            LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + target.name
-                                    + "\nat " + target.name + "." + target.funWorker + "()[" + target.name + ".lsp:" + (line) + "]" +
-                                    "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
-                            return 0;
+                            if (objectMethod.argsValue.containsKey(valueStr)) {
+                                if (objectMethod.argsValue.get(valueStr) instanceof Integer) {
+                                    sum -= ((Integer) objectMethod.argsValue.get(valueStr)).getValue();
+                                } else if (objectMethod.argsValue.get(valueStr) instanceof Double) {
+                                    sum -= ((Double) objectMethod.argsValue.get(valueStr)).getValue();
+                                }
+                            } else {
+                                LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + target.name
+                                        + "\nat " + target.name + "." + target.funWorker + "()[" + target.name + ".lsp:" + (line) + "]" +
+                                        "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
+                                return 0;
+                            }
                         }
                     } else {
-                        ObjectMath objectMath = new ObjectMath(target, valueStr, line);
+                        ObjectMath objectMath = new ObjectMath(target, valueStr, line, objectMethod);
                         int value2 = objectMath.getIntValue();
                         sum -= value2;
                     }
@@ -88,13 +106,21 @@ public class ObjectMath extends Object {
                             else if (target.variableMap.get(valueStr) instanceof Double)
                                 sum *= ((Double) target.variableMap.get(valueStr)).getValue();
                         } else {
-                            LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + target.name
-                                    + "\nat " + target.name + "." + target.funWorker + "()[" + target.name + ".lsp:" + (line) + "]" +
-                                    "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
-                            return 0;
+                            if (objectMethod.argsValue.containsKey(valueStr)) {
+                                if (objectMethod.argsValue.get(valueStr) instanceof Integer) {
+                                    sum *= ((Integer) objectMethod.argsValue.get(valueStr)).getValue();
+                                } else if (objectMethod.argsValue.get(valueStr) instanceof Double) {
+                                    sum *= ((Double) objectMethod.argsValue.get(valueStr)).getValue();
+                                }
+                            } else {
+                                LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + target.name
+                                        + "\nat " + target.name + "." + target.funWorker + "()[" + target.name + ".lsp:" + (line) + "]" +
+                                        "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
+                                return 0;
+                            }
                         }
                     } else {
-                        ObjectMath objectMath = new ObjectMath(target, valueStr, line);
+                        ObjectMath objectMath = new ObjectMath(target, valueStr, line, objectMethod);
                         int value2 = objectMath.getIntValue();
                         sum *= value2;
                     }
@@ -109,13 +135,21 @@ public class ObjectMath extends Object {
                             else if (target.variableMap.get(valueStr) instanceof Double)
                                 sum /= ((Double) target.variableMap.get(valueStr)).getValue();
                         } else {
-                            LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + target.name
-                                    + "\nat " + target.name + "." + target.funWorker + "()[" + target.name + ".lsp:" + (line) + "]" +
-                                    "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
-                            return 0;
+                            if (objectMethod.argsValue.containsKey(valueStr)) {
+                                if (objectMethod.argsValue.get(valueStr) instanceof Integer) {
+                                    sum /= ((Integer) objectMethod.argsValue.get(valueStr)).getValue();
+                                } else if (objectMethod.argsValue.get(valueStr) instanceof Double) {
+                                    sum /= ((Double) objectMethod.argsValue.get(valueStr)).getValue();
+                                }
+                            } else {
+                                LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + target.name
+                                        + "\nat " + target.name + "." + target.funWorker + "()[" + target.name + ".lsp:" + (line) + "]" +
+                                        "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
+                                return 0;
+                            }
                         }
                     } else {
-                        ObjectMath objectMath = new ObjectMath(target, valueStr, line);
+                        ObjectMath objectMath = new ObjectMath(target, valueStr, line, objectMethod);
                         int value2 = objectMath.getIntValue();
                         sum /= value2;
                     }
@@ -147,13 +181,21 @@ public class ObjectMath extends Object {
                             else if (target.variableMap.get(valueStr) instanceof Double)
                                 sum += ((Double) target.variableMap.get(valueStr)).getValue();
                         } else {
-                            LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + target.name
-                                    + "\nat " + target.name + "." + target.funWorker + "()[" + target.name + ".lsp:" + (line) + "]" +
-                                    "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
-                            return 0;
+                            if (objectMethod.argsValue.containsKey(valueStr)) {
+                                if (objectMethod.argsValue.get(valueStr) instanceof Integer) {
+                                    sum += ((Integer) objectMethod.argsValue.get(valueStr)).getValue();
+                                } else if (objectMethod.argsValue.get(valueStr) instanceof Double) {
+                                    sum += ((Double) objectMethod.argsValue.get(valueStr)).getValue();
+                                }
+                            } else {
+                                LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + target.name
+                                        + "\nat " + target.name + "." + target.funWorker + "()[" + target.name + ".lsp:" + (line) + "]" +
+                                        "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
+                                return 0;
+                            }
                         }
                     } else {
-                        ObjectMath objectMath = new ObjectMath(target, valueStr, line);
+                        ObjectMath objectMath = new ObjectMath(target, valueStr, line, objectMethod);
                         double value2 = objectMath.getDoubleValue();
                         sum += value2;
                     }
@@ -168,13 +210,21 @@ public class ObjectMath extends Object {
                             else if (target.variableMap.get(valueStr) instanceof Double)
                                 sum -= ((Double) target.variableMap.get(valueStr)).getValue();
                         } else {
-                            LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + target.name
-                                    + "\nat " + target.name + "." + target.funWorker + "()[" + target.name + ".lsp:" + (line) + "]" +
-                                    "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
-                            return 0;
+                            if (objectMethod.argsValue.containsKey(valueStr)) {
+                                if (objectMethod.argsValue.get(valueStr) instanceof Integer) {
+                                    sum -= ((Integer) objectMethod.argsValue.get(valueStr)).getValue();
+                                } else if (objectMethod.argsValue.get(valueStr) instanceof Double) {
+                                    sum -= ((Double) objectMethod.argsValue.get(valueStr)).getValue();
+                                }
+                            } else {
+                                LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + target.name
+                                        + "\nat " + target.name + "." + target.funWorker + "()[" + target.name + ".lsp:" + (line) + "]" +
+                                        "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
+                                return 0;
+                            }
                         }
                     } else {
-                        ObjectMath objectMath = new ObjectMath(target, valueStr, line);
+                        ObjectMath objectMath = new ObjectMath(target, valueStr, line, objectMethod);
                         double value2 = objectMath.getDoubleValue();
                         sum -= value2;
                     }
@@ -189,13 +239,21 @@ public class ObjectMath extends Object {
                             else if (target.variableMap.get(valueStr) instanceof Double)
                                 sum *= ((Double) target.variableMap.get(valueStr)).getValue();
                         } else {
-                            LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + target.name
-                                    + "\nat " + target.name + "." + target.funWorker + "()[" + target.name + ".lsp:" + (line) + "]" +
-                                    "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
-                            return 0;
+                            if (objectMethod.argsValue.containsKey(valueStr)) {
+                                if (objectMethod.argsValue.get(valueStr) instanceof Integer) {
+                                    sum *= ((Integer) objectMethod.argsValue.get(valueStr)).getValue();
+                                } else if (objectMethod.argsValue.get(valueStr) instanceof Double) {
+                                    sum *= ((Double) objectMethod.argsValue.get(valueStr)).getValue();
+                                }
+                            } else {
+                                LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + target.name
+                                        + "\nat " + target.name + "." + target.funWorker + "()[" + target.name + ".lsp:" + (line) + "]" +
+                                        "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
+                                return 0;
+                            }
                         }
                     } else {
-                        ObjectMath objectMath = new ObjectMath(target, valueStr, line);
+                        ObjectMath objectMath = new ObjectMath(target, valueStr, line, objectMethod);
                         double value2 = objectMath.getDoubleValue();
                         sum *= value2;
                     }
@@ -210,13 +268,21 @@ public class ObjectMath extends Object {
                             else if (target.variableMap.get(valueStr) instanceof Double)
                                 sum /= ((Double) target.variableMap.get(valueStr)).getValue();
                         } else {
-                            LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + target.name
-                                    + "\nat " + target.name + "." + target.funWorker + "()[" + target.name + ".lsp:" + (line) + "]" +
-                                    "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
-                            return 0;
+                            if (objectMethod.argsValue.containsKey(valueStr)) {
+                                if (objectMethod.argsValue.get(valueStr) instanceof Integer) {
+                                    sum /= ((Integer) objectMethod.argsValue.get(valueStr)).getValue();
+                                } else if (objectMethod.argsValue.get(valueStr) instanceof Double) {
+                                    sum /= ((Double) objectMethod.argsValue.get(valueStr)).getValue();
+                                }
+                            } else {
+                                LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + target.name
+                                        + "\nat " + target.name + "." + target.funWorker + "()[" + target.name + ".lsp:" + (line) + "]" +
+                                        "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
+                                return 0;
+                            }
                         }
                     } else {
-                        ObjectMath objectMath = new ObjectMath(target, valueStr, line);
+                        ObjectMath objectMath = new ObjectMath(target, valueStr, line, objectMethod);
                         double value2 = objectMath.getDoubleValue();
                         sum /= value2;
                     }

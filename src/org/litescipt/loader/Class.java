@@ -368,13 +368,19 @@ public class Class {
                                         mathCode += "true";
                                         mathCode = mathCode.split("\\)", 2)[0];
                                     }
-                                    ObjectMath objectMath = new ObjectMath(this, mathCode, i);
+                                    ObjectMath objectMath = new ObjectMath(this, mathCode, i, objectMethod);
                                     if (!objectMath.check(mathCode)) {
                                         if (this.variableMap.containsKey(mathCode)) {
                                             if (variableMap.get(mathCode) instanceof Integer) {
                                                 LiteScipt.instance.consoleSender.call(String.valueOf(((Integer) variableMap.get(mathCode)).getValue()));
                                             } else if (variableMap.get(mathCode) instanceof org.litescipt.loader.lang.Double) {
                                                 LiteScipt.instance.consoleSender.call(String.valueOf(((org.litescipt.loader.lang.Double) variableMap.get(mathCode)).getValue()));
+                                            }
+                                        }else if (objectMethod.argsValue.containsKey(mathCode)){
+                                            if (objectMethod.argsValue.get(mathCode) instanceof Integer){
+                                                LiteScipt.instance.consoleSender.call(String.valueOf(((Integer) objectMethod.argsValue.get(mathCode)).getValue()));
+                                            }else if (objectMethod.argsValue.get(mathCode) instanceof Double){
+                                                LiteScipt.instance.consoleSender.call(String.valueOf(((Double) objectMethod.argsValue.get(mathCode)).getValue()));
                                             }
                                         }
                                     } else {
@@ -408,7 +414,7 @@ public class Class {
                                             return;
                                         }
                                         String mathExpress = mathCode[3];
-                                        ObjectMath objectMath = new ObjectMath(this, mathExpress, i);
+                                        ObjectMath objectMath = new ObjectMath(this, mathExpress, i, objectMethod);
                                         int mathValue = objectMath.getIntValue();
                                         this.variableMap.put(nameMath, new Integer(nameMath, mathValue));
                                         LiteScipt.instance.consoleSender.debug("语法分析: SYMBOL_TYPE:" + "VARIABLE_INTEGER_DF" + "[" + nameMath + ":" + (i) + "]");
@@ -422,7 +428,7 @@ public class Class {
                                             return;
                                         }
                                         String mathExpress = mathCode[3];
-                                        ObjectMath objectMath = new ObjectMath(this, mathExpress, i);
+                                        ObjectMath objectMath = new ObjectMath(this, mathExpress, i, objectMethod);
                                         double mathValue = objectMath.getDoubleValue();
                                         this.variableMap.put(nameMath, new org.litescipt.loader.lang.Double(nameMath, mathValue));
                                         LiteScipt.instance.consoleSender.debug("语法分析: SYMBOL_TYPE:" + "VARIABLE_DOUBLE_DF" + "[" + nameMath + ":" + (i) + "]");
@@ -444,7 +450,7 @@ public class Class {
                                     return;
                                 }
                                 String mathExpress = mathStrings[2];
-                                ObjectMath objectMath = new ObjectMath(this, mathExpress, i);
+                                ObjectMath objectMath = new ObjectMath(this, mathExpress, i, objectMethod);
                                 int resultMathValue = objectMath.getIntValue();
                                 this.variableMap.put(mathStrings[0], new Integer(mathStrings[0], resultMathValue));
                                 LiteScipt.instance.consoleSender.debug("语法分析: SYMBOL_TYPE:" + "VARIABLE_INTEGER_CG{" + valueMath + "->" + resultMathValue + "[" + mathStrings[0] + ":" + (i) + "]");
@@ -458,7 +464,7 @@ public class Class {
                                     return;
                                 }
                                 String mathExpress = mathStrings[2];
-                                ObjectMath objectMath = new ObjectMath(this, mathExpress, i);
+                                ObjectMath objectMath = new ObjectMath(this, mathExpress, i, objectMethod);
                                 double resultMathValue = objectMath.getDoubleValue();
                                 this.variableMap.put(mathStrings[0], new org.litescipt.loader.lang.Double(mathStrings[0], resultMathValue));
                                 LiteScipt.instance.consoleSender.debug("语法分析: SYMBOL_TYPE:" + "VARIABLE_DOUBLE_CG{" + valueMath + "->" + resultMathValue + "[" + mathStrings[0] + ":" + (i) + "]");
@@ -487,7 +493,7 @@ public class Class {
                     }
                     if (this.functionList.contains(funName) && this.funEndLine.containsKey(funName)) {
                         ObjectMethod preMethodObject = this.funObjects.get(funName);
-                        if (each != null) {
+                        if (each!=null) {
                             ObjectMethod invokeMethod = this.funObjects.get(funName);
                             if (each.length != invokeMethod.getArgsSize()) {
                                 LiteScipt.instance.consoleSender.call("org.litescipt.lang.MethodInvokeError: " + name
@@ -495,7 +501,7 @@ public class Class {
                                         "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
                                 return;
                             }
-                            ArrayList<String>  argsArrayList = new ArrayList<>(Arrays.asList(each));
+                            ArrayList<String> argsArrayList = new ArrayList<>(Arrays.asList(each));
                             preMethodObject.update(argsArrayList);
                         }
                         int startLineFun = this.getFunctionStartLine(funName);
@@ -524,7 +530,7 @@ public class Class {
                             return;
                         }
                         String mathPress = code[2];
-                        ObjectMath objectMath = new ObjectMath(this, mathPress, i);
+                        ObjectMath objectMath = new ObjectMath(this, mathPress, i, objectMethod);
                         if (this.variableMap.containsKey(cmd) && this.variableMap.get(cmd) instanceof Integer) {
                             this.variableMap.put(cmd, new Integer(cmd, objectMath.getIntValue()));
                         } else if (this.variableMap.containsKey(cmd) && this.variableMap.get(cmd) instanceof org.litescipt.loader.lang.Double) {
