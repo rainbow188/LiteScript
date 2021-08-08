@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -485,7 +486,7 @@ public class Class {
                         each = funToArgs.split("\\,");
                     }
                     if (this.functionList.contains(funName) && this.funEndLine.containsKey(funName)) {
-
+                        ObjectMethod preMethodObject = this.funObjects.get(funName);
                         if (each != null) {
                             ObjectMethod invokeMethod = this.funObjects.get(funName);
                             if (each.length != invokeMethod.getArgsSize()) {
@@ -494,15 +495,16 @@ public class Class {
                                         "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
                                 return;
                             }
+                            ArrayList<String>  argsArrayList = new ArrayList<>(Arrays.asList(each));
+                            preMethodObject.update(argsArrayList);
                         }
-
                         int startLineFun = this.getFunctionStartLine(funName);
                         int endLineFun = this.funEndLine.get(funName);
                         this.funCodeArrMap.put(funName, read(startLineFun, endLineFun));
                         String oldWorker = funWorker;
                         LiteScipt.instance.consoleSender.debug("语法分析: SYMBOL_TYPE:" + "INVOKE_FUN" + funName + "}[" + name + ":" + (i) + "]");
                         this.funWorker = funName;
-                        invoke(funName, startLineFun, this.funObjects.get(funName));
+                        invoke(funName, startLineFun, preMethodObject);
                         this.funWorker = oldWorker;
                     } else {
                         LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + name
