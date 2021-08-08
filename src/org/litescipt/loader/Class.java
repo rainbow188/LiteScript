@@ -1,6 +1,9 @@
 package org.litescipt.loader;
 
 import org.litescipt.LiteScipt;
+import org.litescipt.loader.lang.Integer;
+import org.litescipt.loader.lang.Double;
+import org.litescipt.loader.lang.Object;
 import org.litescipt.loader.lang.ObjectMath;
 import org.litescipt.loader.lang.ObjectMethod;
 
@@ -17,15 +20,19 @@ public class Class {
     public String name;
     public String path;
     public ArrayList<String> codeBuilder;
-    public ArrayList<Integer> functionCount;
+    public ArrayList<java.lang.Integer> functionCount;
     public ArrayList<String> functionList;
-    public HashMap<String, Integer> verIntHashMap;
-    public HashMap<String, Double> verDoubleHashMap;
+
+    /*
+    Variable Method
+     */
+    public HashMap<String, Object> variableMap;
+
     public HashMap<String, ArrayList<String>> funCodeArrMap;
     public HashMap<String, Class> importClasses;
 
     public String funWorker;
-    private HashMap<String, Integer> funEndLine;
+    private HashMap<String, java.lang.Integer> funEndLine;
     public HashMap<String, String> funTypes;
     public HashMap<String, String> funArgs;
     public HashMap<String, ObjectMethod> funObjects;
@@ -42,10 +49,9 @@ public class Class {
         this.functionCount = new ArrayList<>();
         this.functionList = new ArrayList<>();
         this.path = path;
-        this.verIntHashMap = new HashMap<>();
         this.funWorker = null;
         this.funEndLine = new HashMap<>();
-        this.verDoubleHashMap = new HashMap<>();
+        this.variableMap = new HashMap<>();
         this.funCodeArrMap = new HashMap<>();
         this.importClasses = new HashMap<>();
         this.judgeArrMap = new HashMap<>();
@@ -114,7 +120,7 @@ public class Class {
                                 if (args == null) args = "void";
                                 funArgs.put(funName, args);
                                 funTypes.put(funName, funType);
-                                System.out.print("\n--------------\n函数创建: " + funName + "\n开始: " + i + "\n参数: " + funArgs.get(funName) + "\n返回类型:" + funTypes.get(funName) + "\n-----------------\n");
+                                //System.out.print("\n--------------\n函数创建: " + funName + "\n开始: " + i + "\n参数: " + funArgs.get(funName) + "\n返回类型:" + funTypes.get(funName) + "\n-----------------\n");
                                 //System.out.print("创建函数: " + funName + " 起点:" + functionCount.get(functionCount.size() - 1));
                                 LiteScipt.instance.consoleSender.debug("语法分析: SYMBOL_TYPE:" + funName + "[" + name + ":" + (i) + "]");
                             } else if ((code[j].equals("int")) || code[j].equals("double")) {
@@ -141,7 +147,7 @@ public class Class {
                                     String name1 = code[1];
                                     String judge = code[2];
                                     String value = code[3];
-                                    if (verDoubleHashMap.containsKey(name1) || verIntHashMap.containsKey(name1)) {
+                                    if (variableMap.containsKey(name1)) {
                                         LiteScipt.instance.consoleSender.call("org.litescipt.lang.VariableExistsError: " + name
                                                 + "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + (i) + "]" +
                                                 "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + (i) + "]" +
@@ -151,11 +157,13 @@ public class Class {
                                     if (judge.equals("=") && !value.contains("+") && !value.contains("-") && !value.contains("*") && !value.contains("/")) {
                                         switch (code[j]) {
                                             case "int":
-                                                this.verIntHashMap.put(name1, Integer.valueOf(value));
+                                                Integer integer = new Integer(name1, java.lang.Integer.valueOf(value));
+                                                this.variableMap.put(name1, integer);
                                                 LiteScipt.instance.consoleSender.debug("语法分析: SYMBOL_TYPE:" + "VARIABLE_INTEGER" + "[" + name1 + ":" + (i) + "]");
                                                 break;
                                             case "double":
-                                                this.verDoubleHashMap.put(name1, Double.valueOf(value));
+                                                org.litescipt.loader.lang.Double db = new org.litescipt.loader.lang.Double(name1, java.lang.Double.valueOf(value));
+                                                this.variableMap.put(name1, db);
                                                 LiteScipt.instance.consoleSender.debug("语法分析: SYMBOL_TYPE:" + "VARIABLE_DOUBLE" + "[" + name1 + ":" + (i) + "]");
                                                 break;
                                         }
@@ -173,11 +181,11 @@ public class Class {
                                         for (String verEach : verCodes) {
                                             switch (code[j]) {
                                                 case "int":
-                                                    this.verIntHashMap.put(verEach, 0);
+                                                    this.variableMap.put(verEach, new Integer(verEach, 0));
                                                     LiteScipt.instance.consoleSender.debug("语法分析: SYMBOL_TYPE:" + "VARIABLE_INTEGER" + "[" + verEach + ":" + (i) + "]");
                                                     break;
                                                 case "double":
-                                                    this.verDoubleHashMap.put(verEach, 0D);
+                                                    this.variableMap.put(verEach, new org.litescipt.loader.lang.Double(verCode, 0D));
                                                     LiteScipt.instance.consoleSender.debug("语法分析: SYMBOL_TYPE:" + "VARIABLE_DOUBLE" + "[" + verEach + ":" + (i) + "]");
                                                     break;
                                             }
@@ -185,11 +193,11 @@ public class Class {
                                     } else {
                                         switch (code[j]) {
                                             case "int":
-                                                this.verIntHashMap.put(verCode, 0);
+                                                this.variableMap.put(verCode, new Integer(verCode, 0));
                                                 LiteScipt.instance.consoleSender.debug("语法分析: SYMBOL_TYPE:" + "VARIABLE_INTEGER" + "[" + verCode + ":" + (i) + "]");
                                                 break;
                                             case "double":
-                                                this.verDoubleHashMap.put(verCode, 0D);
+                                                this.variableMap.put(verCode, new org.litescipt.loader.lang.Double(verCode, 0D));
                                                 LiteScipt.instance.consoleSender.debug("语法分析: SYMBOL_TYPE:" + "VARIABLE_DOUBLE" + "[" + verCode + ":" + (i) + "]");
                                                 break;
                                         }
@@ -245,6 +253,10 @@ public class Class {
                                     //System.out.print("函数" + funWorker + "结尾行" + funEndLine.get(funWorker));
                                     LiteScipt.instance.consoleSender.debug("语法分析: SYMBOL_CHAR:" + funWorker + "[END:" + (i) + "]");
                                     ArrayList<String> codesOfMethod = read(this.getFunctionStartLine(funWorker), i);
+                                    if (!funWorker.equals("main")) {
+                                        ObjectMethod objectMethod = new ObjectMethod(funWorker, codesOfMethod, funTypes.get(funWorker), funArgs.get(funWorker));
+                                        this.funObjects.put(funWorker, objectMethod);
+                                    }
                                     //TODO: ObjectMethod
                                     funWorker = null;
                                 }
@@ -326,7 +338,7 @@ public class Class {
         ArrayList<String> funCode = funCodeArrMap.get(fun);
         this.funWorker = fun;
         int i = 1;
-        String args = objectMethod.getFunInvokeArgs().equals("void") ? " " : objectMethod.getFunInvokeArgs();
+        String funVariable = objectMethod.getFunInvokeArgs().equals("void") ? " " : objectMethod.getFunInvokeArgs();
         String returnType = objectMethod.getFunReturnType();
         for (String str : funCode) {
             str = str.trim();
@@ -353,10 +365,12 @@ public class Class {
                                     }
                                     ObjectMath objectMath = new ObjectMath(this, mathCode, i);
                                     if (!objectMath.check(mathCode)) {
-                                        if (verIntHashMap.containsKey(mathCode)) {
-                                            LiteScipt.instance.consoleSender.call(String.valueOf(verIntHashMap.get(mathCode)));
-                                        } else if (verDoubleHashMap.containsKey(mathCode)) {
-                                            LiteScipt.instance.consoleSender.call(String.valueOf(verDoubleHashMap.get(mathCode)));
+                                        if (this.variableMap.containsKey(mathCode)) {
+                                            if (variableMap.get(mathCode) instanceof Integer) {
+                                                LiteScipt.instance.consoleSender.call(String.valueOf(((Integer) variableMap.get(mathCode)).getValue()));
+                                            } else if (variableMap.get(mathCode) instanceof org.litescipt.loader.lang.Double) {
+                                                LiteScipt.instance.consoleSender.call(String.valueOf(((org.litescipt.loader.lang.Double) variableMap.get(mathCode)).getValue()));
+                                            }
                                         }
                                     } else {
                                         double resultValueMath2 = objectMath.getDoubleValue();
@@ -391,7 +405,7 @@ public class Class {
                                         String mathExpress = mathCode[3];
                                         ObjectMath objectMath = new ObjectMath(this, mathExpress, i);
                                         int mathValue = objectMath.getIntValue();
-                                        this.verIntHashMap.put(nameMath, mathValue);
+                                        this.variableMap.put(nameMath, new Integer(nameMath, mathValue));
                                         LiteScipt.instance.consoleSender.debug("语法分析: SYMBOL_TYPE:" + "VARIABLE_INTEGER_DF" + "[" + nameMath + ":" + (i) + "]");
                                     } else {
                                         String nameMath = mathCode[1];
@@ -405,7 +419,7 @@ public class Class {
                                         String mathExpress = mathCode[3];
                                         ObjectMath objectMath = new ObjectMath(this, mathExpress, i);
                                         double mathValue = objectMath.getDoubleValue();
-                                        this.verDoubleHashMap.put(nameMath, mathValue);
+                                        this.variableMap.put(nameMath, new org.litescipt.loader.lang.Double(nameMath, mathValue));
                                         LiteScipt.instance.consoleSender.debug("语法分析: SYMBOL_TYPE:" + "VARIABLE_DOUBLE_DF" + "[" + nameMath + ":" + (i) + "]");
                                     }
                                 }
@@ -414,9 +428,9 @@ public class Class {
                         ;
                     case Symbol.TYPE_MATH:
                         String[] mathStrings = str.split("\\s+", 3);
-                        if (verIntHashMap.containsKey(mathStrings[0]) || verDoubleHashMap.containsKey(mathStrings[0])) {
-                            if (verIntHashMap.containsKey(mathStrings[0])) {
-                                int valueMath = verIntHashMap.get(mathStrings[0]);
+                        if (this.variableMap.containsKey(mathStrings[0])) {
+                            if (this.variableMap.get(mathStrings[0]) instanceof Integer) {
+                                int valueMath = (int) ((Integer) this.variableMap.get(mathStrings[0])).getValue();
                                 if (!mathStrings[1].equals("=")) {
                                     LiteScipt.instance.consoleSender.call("org.litescipt.lang.MethodCharacterError: " + name
                                             + "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + (i) + "]" +
@@ -427,10 +441,10 @@ public class Class {
                                 String mathExpress = mathStrings[2];
                                 ObjectMath objectMath = new ObjectMath(this, mathExpress, i);
                                 int resultMathValue = objectMath.getIntValue();
-                                verIntHashMap.put(mathStrings[0], resultMathValue);
+                                this.variableMap.put(mathStrings[0], new Integer(mathStrings[0], resultMathValue));
                                 LiteScipt.instance.consoleSender.debug("语法分析: SYMBOL_TYPE:" + "VARIABLE_INTEGER_CG{" + valueMath + "->" + resultMathValue + "[" + mathStrings[0] + ":" + (i) + "]");
-                            } else if (verDoubleHashMap.containsKey(mathStrings[0])) {
-                                double valueMath = verDoubleHashMap.get(mathStrings[0]);
+                            } else if (this.variableMap.get(mathStrings[0]) instanceof org.litescipt.loader.lang.Double) {
+                                double valueMath = ((org.litescipt.loader.lang.Double) this.variableMap.get(mathStrings[0])).getValue();
                                 if (!mathStrings[1].equals("=")) {
                                     LiteScipt.instance.consoleSender.call("org.litescipt.lang.MethodCharacterError: " + name
                                             + "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + (i) + "]" +
@@ -441,7 +455,7 @@ public class Class {
                                 String mathExpress = mathStrings[2];
                                 ObjectMath objectMath = new ObjectMath(this, mathExpress, i);
                                 double resultMathValue = objectMath.getDoubleValue();
-                                verDoubleHashMap.put(mathStrings[0], resultMathValue);
+                                this.variableMap.put(mathStrings[0], new org.litescipt.loader.lang.Double(mathStrings[0], resultMathValue));
                                 LiteScipt.instance.consoleSender.debug("语法分析: SYMBOL_TYPE:" + "VARIABLE_DOUBLE_CG{" + valueMath + "->" + resultMathValue + "[" + mathStrings[0] + ":" + (i) + "]");
                             }
                         }
@@ -473,7 +487,7 @@ public class Class {
                         String oldWorker = funWorker;
                         LiteScipt.instance.consoleSender.debug("语法分析: SYMBOL_TYPE:" + "INVOKE_FUN" + funName + "}[" + name + ":" + (i) + "]");
                         this.funWorker = funName;
-                        invoke(funName, startLineFun,this.funObjects.get(funName));
+                        invoke(funName, startLineFun, this.funObjects.get(funName));
                         this.funWorker = oldWorker;
                     } else {
                         LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + name
@@ -494,10 +508,10 @@ public class Class {
                         }
                         String mathPress = code[2];
                         ObjectMath objectMath = new ObjectMath(this, mathPress, i);
-                        if (verIntHashMap.containsKey(cmd)) {
-                            verIntHashMap.put(cmd, objectMath.getIntValue());
-                        } else if (verDoubleHashMap.containsKey(cmd)) {
-                            verDoubleHashMap.put(name, objectMath.getDoubleValue());
+                        if (this.variableMap.containsKey(cmd) && this.variableMap.get(cmd) instanceof Integer) {
+                            this.variableMap.put(cmd, new Integer(cmd, objectMath.getIntValue()));
+                        } else if (this.variableMap.containsKey(cmd) && this.variableMap.get(cmd) instanceof org.litescipt.loader.lang.Double) {
+                            this.variableMap.put(cmd, new org.litescipt.loader.lang.Double(cmd, objectMath.getDoubleValue()));
                         }
                     } else {
                         LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + name
@@ -515,7 +529,7 @@ public class Class {
     }
 
     private boolean isVariable(String name) {
-        if (this.verIntHashMap.containsKey(name) || this.verDoubleHashMap.containsKey(name)) return true;
+        if (this.variableMap.containsKey(name)) return true;
         else return false;
     }
 

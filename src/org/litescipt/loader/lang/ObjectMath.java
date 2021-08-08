@@ -40,10 +40,11 @@ public class ObjectMath extends Object {
                 String[] math2 = str.split("\\+");
                 for (String valueStr : math2) {
                     if (!check(valueStr)) {
-                        if (target.verIntHashMap.containsKey(valueStr) || target.verDoubleHashMap.containsKey(valueStr)) {
-                            if (target.verIntHashMap.containsKey(valueStr)) sum += target.verIntHashMap.get(valueStr);
-                            if (target.verDoubleHashMap.containsKey(valueStr))
-                                sum += target.verDoubleHashMap.get(valueStr);
+                        if (target.variableMap.containsKey(valueStr)) {
+                            if (target.variableMap.get(valueStr) instanceof Integer)
+                                sum += ((Integer) target.variableMap.get(valueStr)).getValue();
+                            else if (target.variableMap.get(valueStr) instanceof Double)
+                                sum += ((Double) target.variableMap.get(valueStr)).getValue();
                         } else {
                             LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + target.name
                                     + "\nat " + target.name + "." + target.funWorker + "()[" + target.name + ".lsp:" + (line) + "]" +
@@ -60,10 +61,11 @@ public class ObjectMath extends Object {
                 String[] math2 = str.split("\\-");
                 for (String valueStr : math2) {
                     if (!check(valueStr)) {
-                        if (target.verIntHashMap.containsKey(valueStr) || target.verDoubleHashMap.containsKey(valueStr)) {
-                            if (target.verIntHashMap.containsKey(valueStr)) sum += target.verIntHashMap.get(valueStr);
-                            if (target.verDoubleHashMap.containsKey(valueStr))
-                                sum += target.verDoubleHashMap.get(valueStr);
+                        if (target.variableMap.containsKey(valueStr)) {
+                            if (target.variableMap.get(valueStr) instanceof Integer)
+                                sum -= ((Integer) target.variableMap.get(valueStr)).getValue();
+                            else if (target.variableMap.get(valueStr) instanceof Double)
+                                sum -= ((Double) target.variableMap.get(valueStr)).getValue();
                         } else {
                             LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + target.name
                                     + "\nat " + target.name + "." + target.funWorker + "()[" + target.name + ".lsp:" + (line) + "]" +
@@ -80,10 +82,11 @@ public class ObjectMath extends Object {
                 String[] math2 = str.split("\\*");
                 for (String valueStr : math2) {
                     if (!check(valueStr)) {
-                        if (target.verIntHashMap.containsKey(valueStr) || target.verDoubleHashMap.containsKey(valueStr)) {
-                            if (target.verIntHashMap.containsKey(valueStr)) sum += target.verIntHashMap.get(valueStr);
-                            if (target.verDoubleHashMap.containsKey(valueStr))
-                                sum += target.verDoubleHashMap.get(valueStr);
+                        if (target.variableMap.containsKey(valueStr)) {
+                            if (target.variableMap.get(valueStr) instanceof Integer)
+                                sum *= ((Integer) target.variableMap.get(valueStr)).getValue();
+                            else if (target.variableMap.get(valueStr) instanceof Double)
+                                sum *= ((Double) target.variableMap.get(valueStr)).getValue();
                         } else {
                             LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + target.name
                                     + "\nat " + target.name + "." + target.funWorker + "()[" + target.name + ".lsp:" + (line) + "]" +
@@ -100,10 +103,11 @@ public class ObjectMath extends Object {
                 String[] math2 = str.split("\\/");
                 for (String valueStr : math2) {
                     if (!check(valueStr)) {
-                        if (target.verIntHashMap.containsKey(valueStr) || target.verDoubleHashMap.containsKey(valueStr)) {
-                            if (target.verIntHashMap.containsKey(valueStr)) sum += target.verIntHashMap.get(valueStr);
-                            if (target.verDoubleHashMap.containsKey(valueStr))
-                                sum += target.verDoubleHashMap.get(valueStr);
+                        if (target.variableMap.containsKey(valueStr)) {
+                            if (target.variableMap.get(valueStr) instanceof Integer)
+                                sum /= ((Integer) target.variableMap.get(valueStr)).getValue();
+                            else if (target.variableMap.get(valueStr) instanceof Double)
+                                sum /= ((Double) target.variableMap.get(valueStr)).getValue();
                         } else {
                             LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + target.name
                                     + "\nat " + target.name + "." + target.funWorker + "()[" + target.name + ".lsp:" + (line) + "]" +
@@ -117,7 +121,7 @@ public class ObjectMath extends Object {
                     }
                 }
             } else {
-                sum += Integer.valueOf(str);
+                sum += java.lang.Integer.valueOf(str);
             }
         }
         return sum;
@@ -137,10 +141,11 @@ public class ObjectMath extends Object {
                 String[] math2 = str.split("\\+");
                 for (String valueStr : math2) {
                     if (!check(valueStr)) {
-                        if (target.verIntHashMap.containsKey(valueStr) || target.verDoubleHashMap.containsKey(valueStr)) {
-                            if (target.verIntHashMap.containsKey(valueStr)) sum += target.verIntHashMap.get(valueStr);
-                            if (target.verDoubleHashMap.containsKey(valueStr))
-                                sum += target.verDoubleHashMap.get(valueStr);
+                        if (target.variableMap.containsKey(valueStr)) {
+                            if (target.variableMap.get(valueStr) instanceof Integer)
+                                sum += ((Integer) target.variableMap.get(valueStr)).getValue();
+                            else if (target.variableMap.get(valueStr) instanceof Double)
+                                sum += ((Double) target.variableMap.get(valueStr)).getValue();
                         } else {
                             LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + target.name
                                     + "\nat " + target.name + "." + target.funWorker + "()[" + target.name + ".lsp:" + (line) + "]" +
@@ -157,10 +162,11 @@ public class ObjectMath extends Object {
                 String[] math2 = str.split("\\-");
                 for (String valueStr : math2) {
                     if (!check(valueStr)) {
-                        if (target.verIntHashMap.containsKey(valueStr) || target.verDoubleHashMap.containsKey(valueStr)) {
-                            if (target.verIntHashMap.containsKey(valueStr)) sum += target.verIntHashMap.get(valueStr);
-                            if (target.verDoubleHashMap.containsKey(valueStr))
-                                sum += target.verDoubleHashMap.get(valueStr);
+                        if (target.variableMap.containsKey(valueStr)) {
+                            if (target.variableMap.get(valueStr) instanceof Integer)
+                                sum -= ((Integer) target.variableMap.get(valueStr)).getValue();
+                            else if (target.variableMap.get(valueStr) instanceof Double)
+                                sum -= ((Double) target.variableMap.get(valueStr)).getValue();
                         } else {
                             LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + target.name
                                     + "\nat " + target.name + "." + target.funWorker + "()[" + target.name + ".lsp:" + (line) + "]" +
@@ -177,10 +183,11 @@ public class ObjectMath extends Object {
                 String[] math2 = str.split("\\*");
                 for (String valueStr : math2) {
                     if (!check(valueStr)) {
-                        if (target.verIntHashMap.containsKey(valueStr) || target.verDoubleHashMap.containsKey(valueStr)) {
-                            if (target.verIntHashMap.containsKey(valueStr)) sum += target.verIntHashMap.get(valueStr);
-                            if (target.verDoubleHashMap.containsKey(valueStr))
-                                sum += target.verDoubleHashMap.get(valueStr);
+                        if (target.variableMap.containsKey(valueStr)) {
+                            if (target.variableMap.get(valueStr) instanceof Integer)
+                                sum *= ((Integer) target.variableMap.get(valueStr)).getValue();
+                            else if (target.variableMap.get(valueStr) instanceof Double)
+                                sum *= ((Double) target.variableMap.get(valueStr)).getValue();
                         } else {
                             LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + target.name
                                     + "\nat " + target.name + "." + target.funWorker + "()[" + target.name + ".lsp:" + (line) + "]" +
@@ -197,10 +204,11 @@ public class ObjectMath extends Object {
                 String[] math2 = str.split("\\/");
                 for (String valueStr : math2) {
                     if (!check(valueStr)) {
-                        if (target.verIntHashMap.containsKey(valueStr) || target.verDoubleHashMap.containsKey(valueStr)) {
-                            if (target.verIntHashMap.containsKey(valueStr)) sum += target.verIntHashMap.get(valueStr);
-                            if (target.verDoubleHashMap.containsKey(valueStr))
-                                sum += target.verDoubleHashMap.get(valueStr);
+                        if (target.variableMap.containsKey(valueStr)) {
+                            if (target.variableMap.get(valueStr) instanceof Integer)
+                                sum /= ((Integer) target.variableMap.get(valueStr)).getValue();
+                            else if (target.variableMap.get(valueStr) instanceof Double)
+                                sum /= ((Double) target.variableMap.get(valueStr)).getValue();
                         } else {
                             LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + target.name
                                     + "\nat " + target.name + "." + target.funWorker + "()[" + target.name + ".lsp:" + (line) + "]" +
@@ -214,7 +222,7 @@ public class ObjectMath extends Object {
                     }
                 }
             } else {
-                sum += Double.valueOf(str);
+                sum += java.lang.Double.valueOf(str);
             }
         }
         return sum;
