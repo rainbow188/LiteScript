@@ -158,7 +158,7 @@ public class Class {
                                                 "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
                                         return;
                                     }
-                                    if (judge.equals("=") && !value.contains("+") && !value.contains("-") && !value.contains("*") && !value.contains("/")) {
+                                    if (judge.equals("=") && !value.contains("+") && !value.contains("-") && !value.contains("*") && !value.contains("/") && !value.contains("(") && !value.contains(")")) {
                                         switch (code[j]) {
                                             case "int":
                                                 Integer integer = new Integer(name1, java.lang.Integer.valueOf(value));
@@ -376,7 +376,7 @@ public class Class {
                                             } else if (variableMap.get(mathCode) instanceof org.litescipt.loader.lang.Double) {
                                                 LiteScipt.instance.consoleSender.call(String.valueOf(((org.litescipt.loader.lang.Double) variableMap.get(mathCode)).getValue()));
                                             }
-                                        } else if (objectMethod.argsValue.containsKey(mathCode)) {
+                                        } else if (!funWorker.equals("main")&&objectMethod.argsValue.containsKey(mathCode)) {
                                             if (objectMethod.argsValue.get(mathCode) instanceof Integer) {
                                                 LiteScipt.instance.consoleSender.call(String.valueOf(((Integer) objectMethod.argsValue.get(mathCode)).getValue()));
                                             } else if (objectMethod.argsValue.get(mathCode) instanceof Double) {
@@ -412,10 +412,44 @@ public class Class {
                                             return;
                                         }
                                         String mathExpress = mathCode[3];
-                                        ObjectMath objectMath = new ObjectMath(this, mathExpress, i, objectMethod);
-                                        int mathValue = objectMath.getIntValue();
-                                        this.variableMap.put(nameMath, new Integer(nameMath, mathValue));
-                                        LiteScipt.instance.consoleSender.debug("语法分析: SYMBOL_TYPE:" + "VARIABLE_INTEGER_DF" + "[" + nameMath + ":" + (i) + "]");
+                                        if (mathExpress.contains("(") && mathExpress.contains(")")) {
+                                            String targetFunName = mathExpress.split("\\(")[0];
+                                            if (this.funObjects.containsKey(targetFunName)) {
+                                                String targetFunArgs = mathExpress.split("\\(")[1].replace(")", "");
+                                                String[] targetEachArgs = targetFunArgs.split(",");
+                                                ArrayList<String> targetArgsList = new ArrayList<>(Arrays.asList(targetEachArgs));
+                                                int targetStartLine = this.getFunctionStartLine(targetFunName);
+                                                ObjectMethod targetNewMethod = this.funObjects.get(targetFunName);
+                                                ObjectMethod targetOldMethod = this.funObjects.get(targetFunName);
+                                                targetNewMethod.update(targetArgsList);
+                                                if (targetNewMethod.getFunReturnType().equals("int")) {
+                                                    String oldWorker = funWorker;
+                                                    this.funWorker = targetFunName;
+                                                    this.invoke(targetFunName, targetStartLine, targetNewMethod);
+                                                    this.funWorker = oldWorker;
+                                                    int targetReturnValue = java.lang.Integer.valueOf(this.funObjects.get(targetFunName).funReturnString);
+                                                    this.funObjects.put(targetFunName, targetOldMethod);
+                                                    this.variableMap.put(nameMath, new Integer(nameMath, targetReturnValue));
+                                                } else {
+                                                    LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: 函数返回值与类型不匹配" + name
+                                                            + "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + (i) + "]" +
+                                                            "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + "]" +
+                                                            "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
+                                                    return;
+                                                }
+                                            } else {
+                                                LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: 调用不存在的函数" + name
+                                                        + "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + (i) + "]" +
+                                                        "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + "]" +
+                                                        "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
+                                                return;
+                                            }
+                                        } else {
+                                            ObjectMath objectMath = new ObjectMath(this, mathExpress, i, objectMethod);
+                                            int mathValue = objectMath.getIntValue();
+                                            this.variableMap.put(nameMath, new Integer(nameMath, mathValue));
+                                            LiteScipt.instance.consoleSender.debug("语法分析: SYMBOL_TYPE:" + "VARIABLE_INTEGER_DF" + "[" + nameMath + ":" + (i) + "]");
+                                        }
                                     } else {
                                         String nameMath = mathCode[1];
                                         if (!mathCode[2].equals("=")) {
@@ -426,10 +460,44 @@ public class Class {
                                             return;
                                         }
                                         String mathExpress = mathCode[3];
-                                        ObjectMath objectMath = new ObjectMath(this, mathExpress, i, objectMethod);
-                                        double mathValue = objectMath.getDoubleValue();
-                                        this.variableMap.put(nameMath, new org.litescipt.loader.lang.Double(nameMath, mathValue));
-                                        LiteScipt.instance.consoleSender.debug("语法分析: SYMBOL_TYPE:" + "VARIABLE_DOUBLE_DF" + "[" + nameMath + ":" + (i) + "]");
+                                        if (mathExpress.contains("(") && mathExpress.contains(")")) {
+                                            String targetFunName = mathExpress.split("\\(")[0];
+                                            if (this.funObjects.containsKey(targetFunName)) {
+                                                String targetFunArgs = mathExpress.split("\\(")[1].replace(")", "");
+                                                String[] targetEachArgs = targetFunArgs.split(",");
+                                                ArrayList<String> targetArgsList = new ArrayList<>(Arrays.asList(targetEachArgs));
+                                                int targetStartLine = this.getFunctionStartLine(targetFunName);
+                                                ObjectMethod targetNewMethod = this.funObjects.get(targetFunName);
+                                                ObjectMethod targetOldMethod = this.funObjects.get(targetFunName);
+                                                targetNewMethod.update(targetArgsList);
+                                                if (targetNewMethod.getFunReturnType().equals("int")) {
+                                                    String oldWorker = funWorker;
+                                                    this.funWorker = targetFunName;
+                                                    this.invoke(targetFunName, targetStartLine, targetNewMethod);
+                                                    this.funWorker = oldWorker;
+                                                    double targetReturnValue = java.lang.Double.valueOf(this.funObjects.get(targetFunName).funReturnString);
+                                                    this.funObjects.put(targetFunName, targetOldMethod);
+                                                    this.variableMap.put(nameMath, new Double(nameMath, targetReturnValue));
+                                                } else {
+                                                    LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: 函数返回值与类型不匹配" + name
+                                                            + "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + (i) + "]" +
+                                                            "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + "]" +
+                                                            "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
+                                                    return;
+                                                }
+                                            } else {
+                                                LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: 调用不存在的函数" + name
+                                                        + "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + (i) + "]" +
+                                                        "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + "]" +
+                                                        "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
+                                                return;
+                                            }
+                                        } else {
+                                            ObjectMath objectMath = new ObjectMath(this, mathExpress, i, objectMethod);
+                                            double mathValue = objectMath.getIntValue();
+                                            this.variableMap.put(nameMath, new Double(nameMath, mathValue));
+                                            LiteScipt.instance.consoleSender.debug("语法分析: SYMBOL_TYPE:" + "VARIABLE_DOUBLE_DF" + "[" + nameMath + ":" + (i) + "]");
+                                        }
                                     }
                                 }
                             }
@@ -459,6 +527,7 @@ public class Class {
                                     return;
                                 }
                             }
+                            this.funObjects.put(objectMethod.getFunName(), objectMethod);
                         }
                         break;
                     case Symbol.TYPE_MATH:
@@ -534,7 +603,10 @@ public class Class {
                         String oldWorker = funWorker;
                         LiteScipt.instance.consoleSender.debug("语法分析: SYMBOL_TYPE:" + "INVOKE_FUN" + funName + "}[" + name + ":" + (i) + "]");
                         this.funWorker = funName;
-                        invoke(funName, startLineFun, preMethodObject);
+                        ObjectMethod oldObjectMethod = this.funObjects.get(funName);
+                        this.funObjects.put(funName, preMethodObject);
+                        invoke(funName, startLineFun, this.funObjects.get(funName));
+                        this.funObjects.put(funName, oldObjectMethod);
                         this.funWorker = oldWorker;
                     } else {
                         LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + name

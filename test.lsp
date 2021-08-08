@@ -1,10 +1,10 @@
 fun main(){
    int b = 10
-   test(b)
+   int c = test(b)
+   print(c)
 }
 
 fun test(int a):int{
     print(a)
-    return a
 }
 
