@@ -1,9 +1,10 @@
 fun main(){
-    int a = 5
-    int b = 10
-    test()
+   int b = 10
+   int c = test(b)
+   print(c)
 }
 
-fun test(){
+fun test(int a):int{
     print(a)
 }
+
