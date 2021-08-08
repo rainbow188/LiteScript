@@ -1,9 +1,9 @@
 fun main(){
     int a = 5
     int b = 10
-    test()
+    test(int)
 }
 
-fun test(){
+fun test(int a){
     print(a)
 }

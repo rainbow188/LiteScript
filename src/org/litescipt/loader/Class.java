@@ -19,6 +19,7 @@ public class Class {
 
     public String name;
     public String path;
+    public int workLine;
     public ArrayList<String> codeBuilder;
     public ArrayList<java.lang.Integer> functionCount;
     public ArrayList<String> functionList;
@@ -59,11 +60,13 @@ public class Class {
         this.funTypes = new HashMap<>();
         this.funArgs = new HashMap<>();
         this.funObjects = new HashMap<>();
+        this.workLine = 0;
     }
 
     public void run() {
         int i = 1;
         for (String string : codeBuilder) {
+            this.workLine = i;
             string = string.trim();
             String[] code = string.split("\\s+");
             for (int j = 0; j < code.length; j++) {
@@ -254,7 +257,7 @@ public class Class {
                                     LiteScipt.instance.consoleSender.debug("语法分析: SYMBOL_CHAR:" + funWorker + "[END:" + (i) + "]");
                                     ArrayList<String> codesOfMethod = read(this.getFunctionStartLine(funWorker), i);
                                     if (!funWorker.equals("main")) {
-                                        ObjectMethod objectMethod = new ObjectMethod(funWorker, codesOfMethod, funTypes.get(funWorker), funArgs.get(funWorker));
+                                        ObjectMethod objectMethod = new ObjectMethod(this, funWorker, codesOfMethod, funTypes.get(funWorker), funArgs.get(funWorker));
                                         this.funObjects.put(funWorker, objectMethod);
                                     }
                                     //TODO: ObjectMethod
@@ -303,7 +306,7 @@ public class Class {
         int mainEnd = this.funEndLine.get("main");
         this.funCodeArrMap.put("main", read(mainStart, mainEnd));
         LiteScipt.instance.consoleSender.debug("语法分析: SYMBOL_FUN:" + "main()" + "[" + (mainStart) + "-" + (mainEnd) + "]");
-        ObjectMethod objectMethod = new ObjectMethod("main", funCodeArrMap.get("main"), this.funTypes.get("main"), this.funArgs.get("main"));
+        ObjectMethod objectMethod = new ObjectMethod(this, "main", funCodeArrMap.get("main"), this.funTypes.get("main"), this.funArgs.get("main"));
         this.funObjects.put("main", objectMethod);
         this.invoke("main", mainStart, funObjects.get("main"));
     }
@@ -341,6 +344,7 @@ public class Class {
         String funVariable = objectMethod.getFunInvokeArgs().equals("void") ? " " : objectMethod.getFunInvokeArgs();
         String returnType = objectMethod.getFunReturnType();
         for (String str : funCode) {
+            this.workLine = i;
             str = str.trim();
             String[] code = str.split("\\s+");
             String type = Symbol.getType(str);
@@ -481,6 +485,17 @@ public class Class {
                         each = funToArgs.split("\\,");
                     }
                     if (this.functionList.contains(funName) && this.funEndLine.containsKey(funName)) {
+
+                        if (each != null) {
+                            ObjectMethod invokeMethod = this.funObjects.get(funName);
+                            if (each.length != invokeMethod.getArgsSize()) {
+                                LiteScipt.instance.consoleSender.call("org.litescipt.lang.MethodInvokeError: " + name
+                                        + "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + (i) + "]" +
+                                        "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
+                                return;
+                            }
+                        }
+
                         int startLineFun = this.getFunctionStartLine(funName);
                         int endLineFun = this.funEndLine.get(funName);
                         this.funCodeArrMap.put(funName, read(startLineFun, endLineFun));
