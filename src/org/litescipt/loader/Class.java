@@ -84,14 +84,14 @@ public class Class {
                                     // System.out.print("\n" + funName + "\n");
                                     args = funName.substring(funName.indexOf("(") + 1, funName.lastIndexOf(")"));
                                     if (!(args.contains("int") || args.contains("double"))) {
-                                        LiteScipt.instance.consoleSender.call("org.litescipt.lang.NoMethodDefFoundError: " + name
+                                        LiteScipt.instance.consoleSender.call("org.litescipt.lang.NoMethodDefFoundError: 数据类型不存在" + name
                                                 + "\nat " + name + ".main(args)[" + name + ".lsp:" + (i) + "]" +
                                                 "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
                                         return;
                                     }
                                 } else {
                                     if (j != 0) {
-                                        LiteScipt.instance.consoleSender.call("org.litescipt.lang.RuntimeError: " + name +
+                                        LiteScipt.instance.consoleSender.call("org.litescipt.lang.RuntimeError: 关键字位置错误" + name +
                                                 "\nat " + "org.litescipt.loader.Class.run()[Class:??]" +
                                                 "\nat " + name + ".null()[" + name + ".lsp:" + (i) + "]");
                                         return;
@@ -102,7 +102,7 @@ public class Class {
                                 if (args != null) funName = funName.replace(args, "");
                                 if (funName.contains("{")) funName = funName.replace("{", "");
                                 else if (!code[j + 2].equals("{")) {
-                                    LiteScipt.instance.consoleSender.call("org.litescipt.lang.NoMethodCharacterDefFoundError: " + name
+                                    LiteScipt.instance.consoleSender.call("org.litescipt.lang.NoMethodCharacterDefFoundError: 表达式符号错误" + name
                                             + "\nat " + name + ".main(args)[" + name + ".lsp:" + (i) + "]" +
                                             "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
                                     return;
@@ -111,13 +111,13 @@ public class Class {
                                 if (funName.contains(":")) {
                                     funType = funName.split("\\:", 2)[1];
                                     if (!(funType.equals("int") || funType.equals("double"))) {
-                                        LiteScipt.instance.consoleSender.call("org.litescipt.lang.NoMethodCharacterDefFoundError: " + name
+                                        LiteScipt.instance.consoleSender.call("org.litescipt.lang.NoMethodCharacterDefFoundError: 数据类型不存在" + name
                                                 + "\nat " + name + ".main(args)[" + name + ".lsp:" + (i) + "]" +
                                                 "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
                                         return;
                                     }
                                 }
-                                if (funType != "void") funName = funName.replace(":" + funType, "");
+                                if (!funType.equals("void")) funName = funName.replace(":" + funType, "");
                                 functionList.add(funName);
                                 funWorker = funName;
                                 functionCount.add(i);
@@ -129,13 +129,13 @@ public class Class {
                                 LiteScipt.instance.consoleSender.debug("语法分析: SYMBOL_TYPE:" + funName + "[" + name + ":" + (i) + "]");
                             } else if ((code[j].equals("int")) || code[j].equals("double")) {
                                 if (j != 0) {
-                                    LiteScipt.instance.consoleSender.call("org.litescipt.lang.RuntimeError: " + name +
+                                    LiteScipt.instance.consoleSender.call("org.litescipt.lang.RuntimeError: 关键字位置错误" + name +
                                             "\nat " + "org.litescipt.loader.Class.run()[Class:??]" +
                                             "\nat " + name + ".null()[" + name + ".lsp:" + (i) + "]");
                                     return;
                                 }
                                 if (funWorker == null) {
-                                    LiteScipt.instance.consoleSender.call("org.litescipt.lang.NoMethodForVariableError: " + name
+                                    LiteScipt.instance.consoleSender.call("org.litescipt.lang.NoMethodForVariableError: 代码结构错误" + name
                                             + "\nat " + name + ".null()[" + name + ".lsp:" + (i) + "]" +
                                             "\nat " + name + ".null()[" + name + ".lsp:" + "]" +
                                             "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
@@ -143,7 +143,7 @@ public class Class {
                                 }
                                 if (code.length == 4) {
                                     if (j != 0) {
-                                        LiteScipt.instance.consoleSender.call("org.litescipt.lang.RuntimeError: " + name +
+                                        LiteScipt.instance.consoleSender.call("org.litescipt.lang.RuntimeError: 关键字位置错误" + name +
                                                 "\nat " + "org.litescipt.loader.Class.run()[Class:??]" +
                                                 "\nat " + name + ".null()[" + name + ".lsp:" + (i) + "]");
                                         return;
@@ -152,7 +152,7 @@ public class Class {
                                     String judge = code[2];
                                     String value = code[3];
                                     if (variableMap.containsKey(name1)) {
-                                        LiteScipt.instance.consoleSender.call("org.litescipt.lang.VariableExistsError: " + name
+                                        LiteScipt.instance.consoleSender.call("org.litescipt.lang.VariableExistsError: 重复定义变量错误" + name
                                                 + "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + (i) + "]" +
                                                 "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + (i) + "]" +
                                                 "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
@@ -174,7 +174,7 @@ public class Class {
                                     }
                                 } else if (code.length == 2 && !string.contains("=")) {
                                     if (j != 0) {
-                                        LiteScipt.instance.consoleSender.call("org.litescipt.lang.RuntimeError: " + name +
+                                        LiteScipt.instance.consoleSender.call("org.litescipt.lang.RuntimeError: 关键字位置错误" + name +
                                                 "\nat " + "org.litescipt.loader.Class.run()[Class:??]" +
                                                 "\nat " + name + ".null()[" + name + ".lsp:" + (i) + "]");
                                         return;
@@ -209,7 +209,7 @@ public class Class {
                                 }
                             } else if (code[j].equals("import")) {
                                 if (j != 0) {
-                                    LiteScipt.instance.consoleSender.call("org.litescipt.lang.RuntimeError: " + name +
+                                    LiteScipt.instance.consoleSender.call("org.litescipt.lang.RuntimeError: 关键字位置错误" + name +
                                             "\nat " + "org.litescipt.loader.Class.run()[Class:??]" +
                                             "\nat " + name + ".null()[" + name + ".lsp:" + (i) + "]");
                                     return;
@@ -225,21 +225,21 @@ public class Class {
                                             classLoader.onEnable(this.name);
                                             this.importClasses.put(targetClass, classLoader.classHashMap.get(targetClass));
                                         } else {
-                                            LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + name
+                                            LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: 不存在的类对象" + name
                                                     + "\nat " + name + "." + "null" + "()[" + name + ".lsp:" + (i) + "]" +
                                                     "\nat " + name + "." + "null" + "()[" + name + ".lsp:" + (i) + "]" +
                                                     "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
                                             return;
                                         }
                                     } else {
-                                        LiteScipt.instance.consoleSender.call("org.litescipt.lang.MethodClassDefNotFoundError: " + name
+                                        LiteScipt.instance.consoleSender.call("org.litescipt.lang.MethodClassDefNotFoundError: 不存在的类对象" + name
                                                 + "\nat " + name + "." + "null" + "()[" + name + ".lsp:" + (i) + "]" +
                                                 "\nat " + name + "." + "null" + "()[" + name + ".lsp:" + (i) + "]" +
                                                 "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
                                         return;
                                     }
                                 } else {
-                                    LiteScipt.instance.consoleSender.call("org.litescipt.lang.MethodClassDefNotFoundError: " + name
+                                    LiteScipt.instance.consoleSender.call("org.litescipt.lang.MethodClassDefNotFoundError: 不存在的类对象" + name
                                             + "\nat " + name + "." + "null" + "()[" + name + ".lsp:" + (i) + "]" +
                                             "\nat " + name + "." + "null" + "()[" + name + ".lsp:" + (i) + "]" +
                                             "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
@@ -265,7 +265,7 @@ public class Class {
                                     funWorker = null;
                                 }
                             } else {
-                                LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + name
+                                LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: 代码结构错误" + name
                                         + "\nat " + name + ".null()[" + name + ".lsp:" + (i) + "]" +
                                         "\nat " + "org.litescipt.loader.Class.run()[Class:79]" +
                                         "\nat " + name + ".null()");
@@ -273,7 +273,7 @@ public class Class {
                             }
                         default:
                             if (code.length > 1) {
-                                LiteScipt.instance.consoleSender.call("org.litescipt.lang.UnknownMethodError: " + name
+                                LiteScipt.instance.consoleSender.call("org.litescipt.lang.UnknownMethodError: 不存在的表达式" + name
                                         + "\nat " + name + ".null()[" + name + ".lsp:" + (i) + "]" +
                                         "\nat " + "org.litescipt.loader.Class.run()[Class:79]" +
                                         "\nat " + name + ".null()");
@@ -287,7 +287,7 @@ public class Class {
         }
 
         if (!functionList.contains("main") || !funEndLine.containsKey("main")) {
-            LiteScipt.instance.consoleSender.call("org.litescipt.lang.MainClassNotFoundError: " + name
+            LiteScipt.instance.consoleSender.call("org.litescipt.lang.MainClassNotFoundError: 主函数不存在" + name
                     + "\nat " + name + ".main(args)[" + name + ".lsp:" + "???" + "]" +
                     "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
             return;
@@ -342,8 +342,8 @@ public class Class {
         ArrayList<String> funCode = funCodeArrMap.get(fun);
         this.funWorker = fun;
         int i = 1;
-        String funVariable = objectMethod.getFunInvokeArgs().equals("void") ? " " : objectMethod.getFunInvokeArgs();
         String returnType = objectMethod.getFunReturnType();
+        boolean isReturnFx = !returnType.equals("void");
         for (String str : funCode) {
             this.workLine = i;
             str = str.trim();
@@ -354,7 +354,7 @@ public class Class {
                 switch (type) {
                     case Symbol.TYPE_KEY:
                         if (cmd.equals("fun")) {
-                            LiteScipt.instance.consoleSender.call("org.litescipt.lang.MethodRuntimeError: " + name
+                            LiteScipt.instance.consoleSender.call("org.litescipt.lang.MethodRuntimeError: 代码结构错误" + name
                                     + "\nat " + name + ".main(args)[" + name + ".lsp:" + (start + i) + "]" +
                                     "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
                             return;
@@ -376,10 +376,10 @@ public class Class {
                                             } else if (variableMap.get(mathCode) instanceof org.litescipt.loader.lang.Double) {
                                                 LiteScipt.instance.consoleSender.call(String.valueOf(((org.litescipt.loader.lang.Double) variableMap.get(mathCode)).getValue()));
                                             }
-                                        }else if (objectMethod.argsValue.containsKey(mathCode)){
-                                            if (objectMethod.argsValue.get(mathCode) instanceof Integer){
+                                        } else if (objectMethod.argsValue.containsKey(mathCode)) {
+                                            if (objectMethod.argsValue.get(mathCode) instanceof Integer) {
                                                 LiteScipt.instance.consoleSender.call(String.valueOf(((Integer) objectMethod.argsValue.get(mathCode)).getValue()));
-                                            }else if (objectMethod.argsValue.get(mathCode) instanceof Double){
+                                            } else if (objectMethod.argsValue.get(mathCode) instanceof Double) {
                                                 LiteScipt.instance.consoleSender.call(String.valueOf(((Double) objectMethod.argsValue.get(mathCode)).getValue()));
                                             }
                                         }
@@ -396,8 +396,6 @@ public class Class {
                                         }
                                     }
                                     break;
-                                case "println":
-                                    break;
                             }
                         } else if (Objects.equals(Symbol.getType(str.split("\\s+", 2)[1]), Symbol.TYPE_MATH)) {
                             if (code.length >= 4) {
@@ -407,7 +405,7 @@ public class Class {
                                     if (mathType.equals("int")) {
                                         String nameMath = mathCode[1];
                                         if (!mathCode[2].equals("=")) {
-                                            LiteScipt.instance.consoleSender.call("org.litescipt.lang.MethodCharacterError: " + name
+                                            LiteScipt.instance.consoleSender.call("org.litescipt.lang.MethodCharacterError: 表达式错误" + name
                                                     + "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + (i) + "]" +
                                                     "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + "]" +
                                                     "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
@@ -421,7 +419,7 @@ public class Class {
                                     } else {
                                         String nameMath = mathCode[1];
                                         if (!mathCode[2].equals("=")) {
-                                            LiteScipt.instance.consoleSender.call("org.litescipt.lang.MethodCharacterError: " + name
+                                            LiteScipt.instance.consoleSender.call("org.litescipt.lang.MethodCharacterError: 表达式错误" + name
                                                     + "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + (i) + "]" +
                                                     "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + "]" +
                                                     "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
@@ -435,15 +433,41 @@ public class Class {
                                     }
                                 }
                             }
+                        } else if (isReturnFx && cmd.equals("return")) {
+                            String returnExpression = str.split("\\s+", 2)[1];
+                            ObjectMath objectMath1 = new ObjectMath(this, returnExpression, i, objectMethod);
+                            if (objectMath1.check(returnExpression)) {
+                                switch (objectMethod.getFunReturnType()) {
+                                    case "int":
+                                        int returnValue = objectMath1.getIntValue();
+                                        objectMethod.funReturnString = String.valueOf(returnValue);
+                                        break;
+                                    case "double":
+                                        double returnValueD = objectMath1.getDoubleValue();
+                                        objectMethod.funReturnString = String.valueOf(returnValueD);
+                                        break;
+                                }
+                            } else {
+                                if (this.variableMap.containsKey(returnExpression)) {
+                                    objectMethod.funReturnString = String.valueOf(this.variableMap.get(returnExpression));
+                                } else if (objectMethod.argsValue.containsKey(returnExpression)) {
+                                    objectMethod.funReturnString = String.valueOf(objectMethod.argsValue.get(returnExpression));
+                                } else {
+                                    LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: 函数返回不存在的对象" + name
+                                            + "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + (i) + "]" +
+                                            "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
+                                    return;
+                                }
+                            }
                         }
-                        ;
+                        break;
                     case Symbol.TYPE_MATH:
                         String[] mathStrings = str.split("\\s+", 3);
                         if (this.variableMap.containsKey(mathStrings[0])) {
                             if (this.variableMap.get(mathStrings[0]) instanceof Integer) {
                                 int valueMath = (int) ((Integer) this.variableMap.get(mathStrings[0])).getValue();
                                 if (!mathStrings[1].equals("=")) {
-                                    LiteScipt.instance.consoleSender.call("org.litescipt.lang.MethodCharacterError: " + name
+                                    LiteScipt.instance.consoleSender.call("org.litescipt.lang.MethodCharacterError: 表达式错误" + name
                                             + "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + (i) + "]" +
                                             "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + "]" +
                                             "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
@@ -457,7 +481,7 @@ public class Class {
                             } else if (this.variableMap.get(mathStrings[0]) instanceof org.litescipt.loader.lang.Double) {
                                 double valueMath = ((org.litescipt.loader.lang.Double) this.variableMap.get(mathStrings[0])).getValue();
                                 if (!mathStrings[1].equals("=")) {
-                                    LiteScipt.instance.consoleSender.call("org.litescipt.lang.MethodCharacterError: " + name
+                                    LiteScipt.instance.consoleSender.call("org.litescipt.lang.MethodCharacterError: 表达式错误" + name
                                             + "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + (i) + "]" +
                                             "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + "]" +
                                             "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
@@ -493,10 +517,10 @@ public class Class {
                     }
                     if (this.functionList.contains(funName) && this.funEndLine.containsKey(funName)) {
                         ObjectMethod preMethodObject = this.funObjects.get(funName);
-                        if (each!=null) {
+                        if (each != null) {
                             ObjectMethod invokeMethod = this.funObjects.get(funName);
                             if (each.length != invokeMethod.getArgsSize()) {
-                                LiteScipt.instance.consoleSender.call("org.litescipt.lang.MethodInvokeError: " + name
+                                LiteScipt.instance.consoleSender.call("org.litescipt.lang.MethodInvokeError: 调用函数对象时出错" + name
                                         + "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + (i) + "]" +
                                         "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
                                 return;
@@ -523,7 +547,7 @@ public class Class {
                 } else if (isVariable(cmd)) {
                     if (code.length == 3) {
                         if (!code[1].equals("=")) {
-                            LiteScipt.instance.consoleSender.call("org.litescipt.lang.MethodCharacterError: " + name
+                            LiteScipt.instance.consoleSender.call("org.litescipt.lang.MethodCharacterError: 不存在的函数对象" + name
                                     + "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + (i) + "]" +
                                     "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + "]" +
                                     "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
@@ -537,7 +561,7 @@ public class Class {
                             this.variableMap.put(cmd, new org.litescipt.loader.lang.Double(cmd, objectMath.getDoubleValue()));
                         }
                     } else {
-                        LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: " + name
+                        LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: 不存在的方法" + name
                                 + "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + (i) + "]" +
                                 "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + "]" +
                                 "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + (i) + "]" +
@@ -549,6 +573,14 @@ public class Class {
 
             i++;
         }
+
+        if (isReturnFx && objectMethod.funReturnString.equals("void")) {
+            LiteScipt.instance.consoleSender.call("org.litescipt.lang.NullPointerError: 函数没有返回值" + name
+                    + "\nat " + name + "." + funWorker + "()[" + name + ".lsp:" + (i) + "]" +
+                    "\nat " + "org.litescipt.loader.Class.run()[Class:57]");
+            return;
+        }
+
     }
 
     private boolean isVariable(String name) {

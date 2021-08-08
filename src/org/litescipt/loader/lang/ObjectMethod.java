@@ -12,6 +12,7 @@ public class ObjectMethod extends Object {
 
     private String funReturnType;//函数返回类型
     private String funInvokeArgs;//函数参数
+    public String funReturnString;
     public HashMap<String, Object> argsValue;
 
     public ObjectMethod(Class aClass, String name, ArrayList<String> buffer, String funReturnType, String funInvokeArgs) {
@@ -21,6 +22,7 @@ public class ObjectMethod extends Object {
         this.funReturnType = funReturnType;
         this.funInvokeArgs = funInvokeArgs;
         this.aClass = aClass;
+        this.funReturnString = "void";
     }
 
     public void update(ArrayList<String> argsValue) {

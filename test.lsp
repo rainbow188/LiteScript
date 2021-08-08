@@ -1,12 +1,10 @@
 fun main(){
-    int b = 10
-    test(b)
+   int b = 10
+   test(b)
 }
 
-fun test(int a){
+fun test(int a):int{
     print(a)
+    return a
 }
 
-fun test2(int a):int{
-    return a*a+(a*(a+a))
-}
