@@ -2,6 +2,7 @@ package org.litescipt;
 
 import org.litescipt.command.ConsoleSender;
 import org.litescipt.loader.ClassLoader;
+import org.litescipt.loader.Symbol;
 
 import java.io.File;
 
@@ -15,6 +16,7 @@ public class LiteScipt {
     public static boolean debug = false;
 
     public static void main(String[] args) {
+        //Symbol.buildTree();
         if (args.length == 0) {
             instance = new LiteScipt();
             instance.init();
