@@ -16,7 +16,7 @@ public class LiteScipt {
     public static boolean debug = false;
 
     public static void main(String[] args) {
-        Symbol.buildTree();
+        //Symbol.buildTree();
         if (args.length == 0) {
             instance = new LiteScipt();
             instance.init();
