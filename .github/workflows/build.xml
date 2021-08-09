@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+
+<project name="LiteScriptVM" default="doc"> 
+
+
+
+<!-- properies --> 
+
+<property name="src.dir" value="WEB-INF/src" /> 
+
+<property name="report.dir" value="report" /> 
+
+<property name="classes.dir" value="WEB-INF/classes" /> 
+
+<property name="lib.dir" value="WEB-INF/lib" /> 
+
+<property name="dist.dir" value="dist" /> 
+
+<property name="doc.dir" value="doc" /> 
+
+
+
+<!-- 定义classpath --> 
+
+<path id="master-classpath"> 
+
+<fileset file="${lib.dir}/*.jar" /> 
+
+<pathelement path="${classes.dir}" /> 
+
+</path> 
+
+
+
+<!-- 初始化任务--> 
+
+<target name="init"> 
+
+
+
+</target> 
+
+
+
+<!-- 编译--> 
+
+<target name="compile" depends="init" description="compile the source files"> 
+
+<mkdir dir="${classes.dir}" /> 
+
+<javac srcdir="${src.dir}" destdir="${classes.dir}" target="6.0"> 
+
+<classpath refid="master-classpath" /> 
+
+</javac> 
+
+</target> 
+
+
+
+<!-- 测试 --> 
+
+<target name="test" depends="compile" description="run junit test"> 
+
+<mkdir dir="${report.dir}" /> 
+
+<junit printsummary="on" haltonfailure="false" failureproperty="tests.failed" showoutput="true"> 
+
+<classpath refid="master-classpath" /> 
+
+<formatter type="plain" /> 
+
+<batchtest todir="${report.dir}"> 
+
+<fileset dir="${classes.dir}"> 
+
+<include name="**/*Test.*" /> 
+
+</fileset> 
+
+</batchtest> 
+
+</junit> 
+
+<fail if="tests.failed"> 
+
+
+
+</fail> 
+
+</target> 
+
+
+
+<!-- 打包成jar --> 
+
+<target name="jar" description="make .jar file"> 
+
+<mkdir dir="${dist.dir}" /> 
+
+<jar destfile="${dist.dir}/hello.jar" basedir="${classes.dir}"> 
+
+<exclude name="**/*Test.*" /> 
+
+<exclude name="**/Test*.*" /> 
+
+</jar> 
+
+</target>
