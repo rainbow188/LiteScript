@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="LiteScriptInstall:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/LiteScriptInstall_jar</output-path>
+    <root id="archive" name="LiteScriptInstall.jar">
+      <element id="module-output" name="LiteScriptInstall" />
+    </root>
+  </artifact>
+</component>

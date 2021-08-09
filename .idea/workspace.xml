@@ -23,6 +23,11 @@
     <property name="project.structure.proportion" value="0.15512195" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\dell\LiteScript\win32" />
+    </key>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -45,9 +50,17 @@
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state x="499" y="192" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1536.816@0.0.1536.816" timestamp="1628481230092" />
+    <state x="549" y="149" key="FileChooserDialogImpl" timestamp="1628481717029">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state x="549" y="149" key="FileChooserDialogImpl/0.0.1536.816@0.0.1536.816" timestamp="1628481717029" />
     <state x="249" y="0" key="SettingsEditor" timestamp="1628481234970">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state x="249" y="0" key="SettingsEditor/0.0.1536.816@0.0.1536.816" timestamp="1628481234970" />
+    <state x="178" y="18" key="new project wizard" timestamp="1628481745303">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state x="178" y="18" key="new project wizard/0.0.1536.816@0.0.1536.816" timestamp="1628481745303" />
   </component>
 </project>
